@@ -46,4 +46,3 @@ RSpec.describe Breed, type: :model do
     end
   end
 end
-

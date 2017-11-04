@@ -3,12 +3,7 @@
 Catapult™ is a proprietary, state-of-the-art system for selling and shipping
 cats to cat enthusiasts worldwide.
 
-This coding challenge consists of three options based on different levels of
-experience and time constraints.  Feel free to undergo any of the following
-challenges, and if you feel you have enough time, you're more than welcome to
-complete more than one.
-
-Your challenges, should you choose to accept them:
+Your challenge, should you choose to accept it:
 
 1. Basic cat breed tagging API
 
@@ -123,4 +118,65 @@ It would return something that looks like this:
   }
 }
 ```
+
+#### Exception Handling
+
+I found a neat gem called [graphql-errors](https://github.com/exAspArk/graphql-errors) which allowed me to put all of my exception handling for errors into my schema.
+Now JSON gives nice pretty errors.
+
+Example mutation:
+
+```
+mutation {
+  deleteTag(id: 200) {
+    id
+  }
+}
+```
+
+Will return the following JSON if `id = 200` can not be found:
+
+```
+{
+  "data": {
+    "deleteTag": null
+  },
+  "errors": [
+    {
+      "message": "Record not found: Couldn't find Tag with 'id'=200",
+      "locations": [
+        {
+          "line": 46,
+          "column": 3
+        }
+      ],
+      "path": [
+        "deleteTag"
+      ]
+    }
+  ]
+}
+```
+
+
+### Rails backend
+
+There are two main models: `Breed` and `Tag`.
+I originally wanted to experiment with the `has_and_belongs_to_many` association rather than the more conventional `has_many :through` association because it's fun to try new things (*cough* graphql *cough*).
+HABTM does not have a join model, and when adding tags through the breeds' `tags` association, I can not perform model level validations and have to rely on db level validations.
+I'm expecting tons and tons of people to use my service, so I'd like to spare the db from doing all of my validation for me, so I switched to a `has_many :through` association with a validation on the `BreedTag` model.
+We still need the db level validations in case there are concurrent updates to a breed's `tags`.
+
+#### Orphaned tags
+
+The Humane Tag Association™ monitored the creation of the tag deletion api.
+No tags were orphaned (even for a second) during the deletion of a breed.
+
+### Testing
+
+I am a big fan of RSpec, Shoulda-Matchers, Capybara, and Database-Cleaner for helping me write tests.
+I found a helpful gem called [rspec-graphql_matchers](https://github.com/khamusa/rspec-graphql_matchers) which provided a little bit of syntactic sugar when testing my graphql api.
+
+I followed bits of advice from [graphql-ruby.org](http://graphql-ruby.org/schema/testing.html), [how to graphql](https://github.com/howtographql/howtographql/blob/8614026b99e38dbf0a73aaecefd1f703efbedddf/content/backend/graphql-ruby/3-mutations.md#testing-with-unit-test), and [rspec-graphql_matcher](https://github.com/khamusa/rspec-graphql_matchers) on proper ways to test the graphql API.
+However, there is not a lot of documentation and guides on this in the wild, and a good blog post would do the rails community a great service.
 

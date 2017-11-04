@@ -8,6 +8,10 @@ class Breed < ApplicationRecord
   has_many :breed_tags, dependent: :destroy
   has_many :tags, through: :breed_tags
 
+  def tag_count
+    tags.count
+  end
+
   private
 
   def delete_unique_tags

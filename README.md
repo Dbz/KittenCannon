@@ -62,6 +62,13 @@ deleteBreed(name: String, id: ID)
 deleteTag(name: String, id: ID)
 ```
 
+The following fields are accessable from the Breed and Tag type:
+
+1. id
+1. name
+1. tags / breeds
+1. tag_count / breed_count
+
 Here is an example query to view all of the breeds with thier name and tags. Each tag will also contain the name and id.
 
 ```
@@ -164,13 +171,13 @@ Will return the following JSON if `id = 200` can not be found:
 There are two main models: `Breed` and `Tag`.
 I originally wanted to experiment with the `has_and_belongs_to_many` association rather than the more conventional `has_many :through` association because it's fun to try new things (*cough* graphql *cough*).
 HABTM does not have a join model, and when adding tags through the breeds' `tags` association, I can not perform model level validations and have to rely on db level validations.
-I'm expecting tons and tons of people to use my service, so I'd like to spare the db from doing all of my validation for me, so I switched to a `has_many :through` association with a validation on the `BreedTag` model.
+I'm expecting tons and tons of people to use my service, so I'd like to spare the db from doing all of my validations for me, so I switched to a `has_many :through` association with a validation on the `BreedTag` model.
 We still need the db level validations in case there are concurrent updates to a breed's `tags`.
 
 #### Orphaned tags
 
 The Humane Tag Association™ monitored the creation of the tag deletion api.
-No tags were orphaned (even for a second) during the deletion of a breed.
+No tags are orphaned (even for a second) during the deletion of a breed.
 
 ### Testing
 

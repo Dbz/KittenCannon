@@ -22,4 +22,20 @@ RSpec.describe Tag, type: :model do
       expect(tag.name).to eq 'tag'
     end
   end
+
+  describe 'Methods' do
+    let(:tag) { Tag.create(name: 'soft') }
+    let(:breed1) { Breed.create(name: 'Turkish Van') }
+    let(:breed2) { Breed.create(name: 'Tabby') }
+    describe '#tag_count' do
+      it 'returns the amount of tags on a breed' do
+        expect(tag.breed_count).to eq 0
+        breed1.tags << tag
+        breed2.tags << tag
+        expect(tag.breed_count).to eq 2
+        breed1.destroy
+        expect(tag.breed_count).to eq 1
+      end
+    end
+  end
 end

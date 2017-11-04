@@ -1,24 +1,126 @@
-# README
+# Catapult™ Challenge
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Catapult™ is a proprietary, state-of-the-art system for selling and shipping
+cats to cat enthusiasts worldwide.
 
-Things you may want to cover:
+This coding challenge consists of three options based on different levels of
+experience and time constraints.  Feel free to undergo any of the following
+challenges, and if you feel you have enough time, you're more than welcome to
+complete more than one.
 
-* Ruby version
+Your challenges, should you choose to accept them:
 
-* System dependencies
+1. Basic cat breed tagging API
 
-* Configuration
+Basic System
 
-* Database creation
+```
+Entity (cat breed):
+  |
+  -- Tags (traits)
+```
 
-* Database initialization
+##### Concrete Example
 
-* How to run the test suite
+```
+American Bobtail
+  |
+  -- affectionate
+  -- low shedding
+  -- playful
+  -- intelligent
 
-* Services (job queues, cache servers, search engines, etc.)
+Cymric
+  |
+  -- affectionate
+  -- has no tail
+  -- friendly
 
-* Deployment instructions
+Norwegian Forest Cat
+  |
+  -- low shedding
+  -- pet friendly
+  -- knows kung fu
+  -- climbs trees
+```
 
-* ...
+## The dbz approach
+
+Because this is an open ended exercise, I'd like to take the opportunity to learn something new: **graphql**
+This will definitely make the challenge take much longer than it should, but I will get first hand experience to determine how graphql works as a solution to JSON apis.
+
+### Graphql implementation details
+
+I have implemented the following methods:
+
+```
+allBreeds
+allTags
+
+createBreed(name: String)
+createTag(name: String, breed_id: ID)
+
+updateBreed(name: String, id: ID)
+updateTag(name: String, id: ID)
+
+deleteBreed(name: String, id: ID)
+deleteTag(name: String, id: ID)
+```
+
+Here is an example query to view all of the breeds with thier name and tags. Each tag will also contain the name and id.
+
+```
+query {
+  allBreeds {
+    name
+    id
+    tags {
+      name
+      id
+    }
+  }
+}
+```
+
+It would return something that looks like this:
+```
+{
+  "data": {
+    "allBreeds": [
+      {
+        "name": "turkish van",
+        "id": "4",
+        "tags": [
+          {
+            "name": "soft",
+            "id": "5"
+          },
+          {
+            "name": "odd eyed (different color eyes)",
+            "id": "6"
+          },
+          {
+            "name": "swims",
+            "id": "7"
+          }
+        ]
+      },
+      {
+        "name": "ragdoll",
+        "id": "5",
+        "tags": [
+          {
+            "name": "soft",
+            "id": "5"
+          },
+          {
+            "name": "lazy",
+            "id": "8"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+

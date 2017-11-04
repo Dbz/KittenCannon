@@ -1,6 +1,6 @@
-# Catapult™ Challenge
+# KittenCannon™ Challenge
 
-Catapult™ is a proprietary, state-of-the-art system for selling and shipping
+KittenCannon™ is a proprietary, state-of-the-art system for selling and shipping
 cats to cat enthusiasts worldwide.
 
 Your challenge, should you choose to accept it:

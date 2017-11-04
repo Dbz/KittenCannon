@@ -4,5 +4,6 @@ class Tag < ApplicationRecord
 
   before_save { |tag| tag.name = tag.name.downcase }
 
-  has_and_belongs_to_many :breeds
+  has_many :breed_tags, dependent: :destroy
+  has_many :breeds, through: :breed_tags
 end

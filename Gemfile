@@ -44,8 +44,6 @@ group :development, :test do
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
   gem 'rspec-rails'
-  # Graphql testing helpers
-  gem 'rspec-graphql_matchers'
 end
 
 group :development do
@@ -61,6 +59,8 @@ end
 group :test do
   gem 'shoulda-matchers', '~> 3.1'
   gem 'database_cleaner'
+  # Graphql testing helpers
+  gem 'rspec-graphql_matchers'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

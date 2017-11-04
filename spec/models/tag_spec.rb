@@ -9,7 +9,8 @@ RSpec.describe Tag, type: :model do
   end
 
   describe 'Tag Associations' do
-    it { should have_and_belong_to_many :breeds }
+    it { should have_many(:breed_tags).dependent(:destroy) }
+    it { should have_many(:breeds).through(:breed_tags) }
   end
 
   describe 'Tag Callbacks' do

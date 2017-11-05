@@ -1,7 +1,5 @@
 require 'rails_helper'
 
-types = GraphQL::Define::TypeDefiner.instance
-
 describe Types::MutationType do
   describe 'fields' do
     it { is_expected.to have_field(:createBreed).of_type('Breed') }

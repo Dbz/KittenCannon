@@ -58,7 +58,7 @@ createTag(name: String, breed_id: ID)
 updateBreed(name: String, id: ID)
 updateTag(name: String, id: ID)
 
-deleteBreed(name: String, id: ID)
+deleteBreed(id: ID)
 deleteTag(id: ID)
 ```
 

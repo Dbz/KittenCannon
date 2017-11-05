@@ -47,7 +47,7 @@ RSpec.configure do |config|
     DatabaseCleaner.cleaning do
       example.run
     end
-  end 
+  end
 end
 
 Shoulda::Matchers.configure do |config|

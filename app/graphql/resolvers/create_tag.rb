@@ -7,8 +7,8 @@ class Resolvers::CreateTag < GraphQL::Function
   def call(_obj, args, _ctx)
     breed = Breed.find(args[:breed_id])
 
-    tag = Tag.find_or_create_by(name: args[:name].downcase).tap do |tag|
-      breed.tags << tag 
+    Tag.find_or_create_by(name: args[:name].downcase).tap do |tag|
+      breed.tags << tag
       breed.save!
     end
   end

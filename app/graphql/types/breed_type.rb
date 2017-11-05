@@ -1,5 +1,5 @@
 Types::BreedType = GraphQL::ObjectType.define do
-  name "Breed"
+  name 'Breed'
   field :id, !types.ID
   field :name, !types.String
   field :tag_count, types.Int

@@ -1,5 +1,5 @@
 Types::MutationType = GraphQL::ObjectType.define do
-  name "Mutation"
+  name 'Mutation'
 
   field :createBreed, function: Resolvers::CreateBreed.new
   field :createTag, function: Resolvers::CreateTag.new

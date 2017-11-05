@@ -5,8 +5,6 @@ class Resolvers::UpdateBreed < GraphQL::Function
   type Types::BreedType
 
   def call(_obj, args, _ctx)
-    Breed.update(args[:id], { name: args[:name] })
+    Breed.update(args[:id], name: args[:name])
   end
 end
-
-

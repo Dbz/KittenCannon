@@ -59,7 +59,7 @@ updateBreed(name: String, id: ID)
 updateTag(name: String, id: ID)
 
 deleteBreed(name: String, id: ID)
-deleteTag(name: String, id: ID)
+deleteTag(id: ID)
 ```
 
 The following fields are accessable from the Breed and Tag type:
@@ -69,7 +69,7 @@ The following fields are accessable from the Breed and Tag type:
 1. tags / breeds
 1. tag_count / breed_count
 
-Here is an example query to view all of the breeds with thier name and tags. Each tag will also contain the name and id.
+Here is an example query to view all of the breeds with their name and tags. Each tag will also contain the name and id.
 
 ```
 query {
@@ -126,6 +126,10 @@ It would return something that looks like this:
 }
 ```
 
+ - [Code Example: QueryType](/app/graphql/types/query_type.rb)
+ - [Code Example: BreedType](/app/graphql/types/breed_type.rb)
+ - [Code Example: CreateTag Resolver](/app/graphql/resolvers/create_tag.rb)
+
 #### Exception Handling
 
 I found a neat gem called [graphql-errors](https://github.com/exAspArk/graphql-errors) which allowed me to put all of my exception handling for errors into my schema.
@@ -165,19 +169,25 @@ Will return the following JSON if `id = 200` can not be found:
 }
 ```
 
+ - [Code Example: Exception handling on the graphql schema](/app/graphql/catapault_schema.rb)
 
 ### Rails backend
 
 There are two main models: `Breed` and `Tag`.
 I originally wanted to experiment with the `has_and_belongs_to_many` association rather than the more conventional `has_many :through` association because it's fun to try new things (*cough* graphql *cough*).
-HABTM does not have a join model, and when adding tags through the breeds' `tags` association, I can not perform model level validations and have to rely on db level validations.
+HABTM does not have a join model, and when adding tags through the breeds' `tags` association, I can not perform model level validations and have to rely on db level constraints.
 I'm expecting tons and tons of people to use my service, so I'd like to spare the db from doing all of my validations for me, so I switched to a `has_many :through` association with a validation on the `BreedTag` model.
-We still need the db level validations in case there are concurrent updates to a breed's `tags`.
+We still need the db level constraints in case there are concurrent updates to a breed's `tags`.
+
+ - [Code Example: BreedTags join table migration](/db/migrate/20171104171821_create_breed_tags.rb)
+ - [Code Example: Breed model](/app/models/breed.rb)
 
 #### Orphaned tags
 
 The Humane Tag Association™ monitored the creation of the tag deletion api.
 No tags are orphaned (even for a second) during the deletion of a breed.
+
+ - [Code Example: See SQL skillz translated into ActiveRecord](/app/models/breed.rb#L17-L19)
 
 ### Testing
 
@@ -186,4 +196,8 @@ I found a helpful gem called [rspec-graphql_matchers](https://github.com/khamusa
 
 I followed bits of advice from [graphql-ruby.org](http://graphql-ruby.org/schema/testing.html), [how to graphql](https://github.com/howtographql/howtographql/blob/8614026b99e38dbf0a73aaecefd1f703efbedddf/content/backend/graphql-ruby/3-mutations.md#testing-with-unit-test), and [rspec-graphql_matcher](https://github.com/khamusa/rspec-graphql_matchers) on proper ways to test the graphql API.
 However, there is not a lot of documentation and guides on this in the wild, and a good blog post would do the rails community a great service.
+
+ - [Code Example: Breed model spec](/spec/models/breed_spec.rb)
+ - [Code Example: BreedType spec](/spec/graphql/types/breed_type_spec.rb)
+ - [Code Example: CreateBreed resolver spec](/spec/graphql/resolvers/create_breed_spec.rb)
 

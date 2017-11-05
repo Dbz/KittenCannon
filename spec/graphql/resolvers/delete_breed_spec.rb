@@ -11,5 +11,10 @@ describe Resolvers::DeleteBreed do
       Resolvers::DeleteBreed.new.call(nil, { id: breed.id }, {})
       expect(Breed.where(id: breed.id)).to be_empty
     end
+
+    it 'throws an error when the record can not be found' do
+      Resolvers::DeleteBreed.new.call(nil, { id: breed.id }, {})
+      expect { Resolvers::DeleteBreed.new.call(nil, { id: breed.id }, {}) }.to raise_error ActiveRecord::RecordNotFound
+    end
   end
 end

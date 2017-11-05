@@ -9,5 +9,9 @@ describe Resolvers::CreateBreed do
     it 'persists to the database' do
       expect(breed.persisted?).to be true
     end
+
+    it 'throws an error when the record already exists' do
+      expect { Resolvers::CreateBreed.new.call(nil,{ name: 'b' }, {}) }.to raise_error ActiveRecord::RecordInvalid
+    end
   end
 end

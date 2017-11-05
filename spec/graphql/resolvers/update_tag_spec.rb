@@ -12,5 +12,10 @@ describe Resolvers::UpdateTag do
       Resolvers::UpdateTag.new.call(nil, { name: 't2', id: tag.id }, {})
       expect(Tag.find(tag.id).name).to eq 't2'
     end
+    
+    it 'throws an error when the record can not be found' do
+      expect { Resolvers::UpdateTag.new.call(nil, { name: 't', id: 100 }, {})
+ }.to raise_error ActiveRecord::RecordNotFound
+    end
   end
 end

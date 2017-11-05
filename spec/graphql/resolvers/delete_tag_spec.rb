@@ -12,5 +12,10 @@ describe Resolvers::DeleteTag do
       Resolvers::DeleteTag.new.call(nil, { id: tag.id }, {})
       expect(Tag.where(id: tag.id)).to be_empty
     end
+
+    it 'throws an error when the record can not be found' do
+      Resolvers::DeleteTag.new.call(nil, { id: tag.id }, {})
+      expect { Resolvers::DeleteTag.new.call(nil, { id: tag.id }, {}) }.to raise_error ActiveRecord::RecordNotFound
+    end
   end
 end

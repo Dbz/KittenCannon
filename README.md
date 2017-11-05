@@ -191,7 +191,7 @@ No tags are orphaned (even for a second) during the deletion of a breed.
 
 ### Testing
 
-I am a big fan of RSpec, Shoulda-Matchers, Capybara, and Database-Cleaner for helping me write tests.
+I am a big fan of RSpec, Shoulda-Matchers, Capybara, FactoryGirl, Fuubar, and Database-Cleaner for helping me test.
 I found a helpful gem called [rspec-graphql_matchers](https://github.com/khamusa/rspec-graphql_matchers) which provided a little bit of syntactic sugar when testing my graphql api.
 
 I followed bits of advice from [graphql-ruby.org](http://graphql-ruby.org/schema/testing.html), [how to graphql](https://github.com/howtographql/howtographql/blob/8614026b99e38dbf0a73aaecefd1f703efbedddf/content/backend/graphql-ruby/3-mutations.md#testing-with-unit-test), and [rspec-graphql_matcher](https://github.com/khamusa/rspec-graphql_matchers) on proper ways to test the graphql API.

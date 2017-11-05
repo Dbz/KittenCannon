@@ -10,5 +10,9 @@ describe Resolvers::CreateTag do
     it 'persists to the database' do
       expect(tag.persisted?).to be true
     end
+
+    it 'throws an error when the record already exists' do
+      expect { Resolvers::CreateTag.new.call(nil,{ name: 't', breed_id: breed.id }, {}) }.to raise_error ActiveRecord::RecordInvalid
+    end
   end
 end

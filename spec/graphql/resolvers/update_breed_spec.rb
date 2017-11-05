@@ -12,5 +12,9 @@ describe Resolvers::UpdateBreed do
       Resolvers::UpdateBreed.new.call(nil, { name: 'b2', id: breed.id }, {})
       expect(Breed.find(breed.id).name).to eq 'b2'
     end
+
+    it 'throws an error when the record can not be found' do
+      expect { Resolvers::UpdateBreed.new.call(nil, { name: 'b', id: 100 }, {}) }.to raise_error ActiveRecord::RecordNotFound
+    end
   end
 end
